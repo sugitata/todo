@@ -1,0 +1,118 @@
+$defaultColor: rgba(0,0,100,0.5);
+$hoverColor: rgba(200,0,0,0.6);
+$defaultSize: 18px;
+$defaultPad: 10px;
+
+@mixin round($radius) {
+	border-radius: $radius;
+}
+
+
+@mixin gradient($start-color, $end-color, $orientation)
+ {
+ background: $start-color;
+ @if $orientation == vertical
+ {
+ // vertical
+ background: -moz-linear-gradient(top,  $start-color 0%, $end-color 100%);
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color));
+ background: -webkit-linear-gradient(top,  $start-color 0%,$end-color 100%);
+ background: -o-linear-gradient(top,  $start-color 0%,$end-color 100%);
+ background: -ms-linear-gradient(top,  $start-color 0%,$end-color 100%);
+ background: linear-gradient(to bottom,  $start-color 0%,$end-color 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=0 );
+ }
+ @else if $orientation == horizontal
+ {
+ // horizontal
+ background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
+ background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
+ background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
+ background: -o-linear-gradient(left,  $start-color 0%,$end-color 100%);
+ background: -ms-linear-gradient(left,  $start-color 0%,$end-color 100%);
+ background: linear-gradient(to right,  $start-color 0%,$end-color 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+ }
+ @else
+ {
+ // radial
+ background: -moz-radial-gradient(center, ellipse cover,  $start-color 0%, $end-color 100%);
+ background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color));
+ background: -webkit-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+ background: -o-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+ background: -ms-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
+ background: radial-gradient(ellipse at center,  $start-color 0%,$end-color 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$start-color', endColorstr='$end-color',GradientType=1 );
+ }
+ }
+
+
+body{
+	font-size: $defaultSize;
+}
+
+h1{
+	color: $defaultColor;
+}
+
+
+
+ul{
+	width: 800px;
+	padding: 20px;
+	@include gradient(#48D1CC, #E0FFFF, vertical);
+	@include round(8px);
+
+	li{ width: 800px - 40px;
+		margin: 10px 0;
+		padding: $defaultPad;
+		display: block;
+		list-style: none;
+		background-color: white;
+		color: #008080;
+		@include round(4px);
+
+			input[type=checkbox]{
+			width: 30px;
+			height: 30px;
+			vertical-align: middle;
+		   }
+
+		   span{
+		   	float: right;
+		   	font-size: 14px;
+		   }
+
+		}
+
+		.completed{
+			text-decoration: line-through;
+			color: #ccc;
+		}
+}
+
+
+form{
+	input{
+		font-size: $defaultSize;
+		padding: $defaultPad;
+		@include round(5%);
+	}
+	input[type=date]{
+		font-size: 14px;
+		padding: 10px;
+		color: #008080;
+	}
+
+	button{
+		font-size: $defaultSize;
+		background-color: #66CDAA;
+		color: white;
+		padding: 10px;
+		@include round(8%);
+		&[disabled]{
+			background-color: #ddd;
+            color: #aaa;
+		}
+	}
+}

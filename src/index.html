@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo list</title>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+  <todo></todo>
+
+  <script src="toda.tag" type="riot/tag"></script>
+  <script src="https://rawgit.com/riot/riot/master/riot%2Bcompiler.min.js"></script>
+
+  <script>
+  	riot.mount('*', {
+  		title: 'Todo list',
+      items: [
+        { title: 'hello riot', time: '2016-10-13' },
+        { title: 'Hidden item',  hidden: true },
+        { title: 'hello sass', time: '2016-10-14' },
+        { title: 'hello gulp', time: '2016-10-14'  },
+        { title: 'hello hoge', time: '2016-10-15'  },
+        { title: 'hello hogehoge', time: '2016-10-16'  }
+      ]
+  	})
+  </script>
+
+
+</body>
+</html>
