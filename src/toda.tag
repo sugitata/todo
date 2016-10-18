@@ -37,8 +37,8 @@
     add(e) {
       if (this.text) {
         this.items.push({ title: this.text, time: this.date })
-        this.text = this.input.value = ''
-        this.date = this.datetime.value = ''
+        this.text = this.input.value = ""
+        this.date = this.datetime.value = ""
       }
     }
 
@@ -65,3 +65,16 @@
   </script>
 
 </todo>
+
+<!-- タスクの入れ子関係を実現できるように -->
+<!-- これはtaskごとにネストを作ってそこにまたtodoアプリの仕組みでフォーム作ってやればいいだけ -->
+
+<!-- ローカルにデータを保存する
+これはローカルストレージの利用 -->
+
+
+
+<!-- タスクの入れ子関係を実現できるように
+これもタグ機能と一緒
+
+親タスク ( >> タグ )　>> 子タスク ( >> タグ ) -->
