@@ -83,6 +83,22 @@ ul{
 		   	font-size: 14px;
 		   }
 
+		   ul{
+		   	@include gradient(gray, #E0FFFF, vertical);
+		   	width: 600px;
+		   	height: 30px;
+
+		   	li{
+		   		display: inline;
+		   		margin: 2px;
+		   	}
+
+		   	button{
+		   		background-color: #5F9EA0;
+		   		color: white;
+		   	}
+		   }
+
 		}
 
 		.completed{

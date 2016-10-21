@@ -24,9 +24,11 @@ gulp.task("build", function(){
 
 
 gulp.task("watch", function(){
-	gulp.watch('./src/*.html', ["html"])
-	gulp.watch('./src/sass/*.scss', ["sass"])
-	gulp.watch('./src/*.tag', ["tag"])
+	// gulp.watch('./src/*.html', ["html"])
+	// gulp.watch('./src/sass/*.scss', ["sass"])
+	// gulp.watch('./src/*.tag', ["tag"])
+	gulp.watch("./src/*",  ["build"])
+	gulp.watch("./src/sass/*.scss", ["build"])
 
 	gulp.src("./dist")
 	  .pipe(

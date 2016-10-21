@@ -14,7 +14,12 @@
   	riot.mount('*', {
   		title: "Todo list",
       items: [
-        { title: "hello riot", time: "2016-10-13" },
+        { title: "hello riot", time: "2016-10-13", taglists: [
+           { tagname: "first" },
+           { tagname: "second" },
+           { tagname: "third" }
+
+           ]},
         { title: "Hidden item",  hidden: true },
         { title: "hello sass", time: "2016-10-14" },
         { title: "hello gulp", time: "2016-10-14"  },
