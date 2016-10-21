@@ -14,20 +14,37 @@
   	riot.mount('*', {
   		title: "Todo list",
       items: [
-        { title: "hello riot", time: "2016-10-13", taglists: [
+        { title: "hello riot", time: "2016-10-13", tagcontents: [
            { tagname: "first" },
            { tagname: "second" },
            { tagname: "third" }
 
-           ]},
-        { title: "Hidden item",  hidden: true },
-        { title: "hello sass", time: "2016-10-14" },
-        { title: "hello gulp", time: "2016-10-14"  },
-        { title: "hello hoge", time: "2016-10-15"  },
-        { title: "hello hogehogee", time: "2016-10-17"  }
+         ]},
+        { title: "hello sass", time: "2016-10-14", tagcontents: [
+           { tagname: "first" },
+           { tagname: "second" },
+           { tagname: "third" }
+         ]},
+        { title: "hello gulp", time: "2016-10-14", tagcontents: [
+           { tagname: "first" },
+           { tagname: "second" },
+           { tagname: "third" }
+
+        ]},
+        { title: "hello hoge", time: "2016-10-15", tagcontents: [
+           { tagname: "first" },
+           { tagname: "second" },
+           { tagname: "third" }
+        ]},
+        { title: "hello hogehogee", time: "2016-10-17", tagcontents: [
+           { tagname: "first" },
+           { tagname: "second" },
+           { tagname: "third" }
+        ]}
       ]
   	})
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 
 </body>
