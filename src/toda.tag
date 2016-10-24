@@ -3,16 +3,17 @@
   <h1>{ opts.title }</h1>
 
   <ul>
-    <li each={ items }>
+    <li each={ items } class="task">
       <label class={ completed: done }>
         <input type="checkbox" class="cb" checked={ done } onclick={ parent.toggle }> { title }<span>{ time }<span>
       </label>
       <button onclick={ parent.tagEdit }>タグ編集</button>
+      <button onclick={ parent.childEdit }>タスク編集</button>
       <div hide={ visible } class="edit_tag">
-          <form onsubmit={ parent.addTag }>
-            <input name="taginput" onchange={ editTag }>
-            <button>タグ追加</button>
-            <button onclick={ parent.finEdit }>編集終了</button>
+          <form onsubmit={ addTag }>
+            <input name="taginput" size="30px" onkeyup={ editTag }>
+            <button disabled={ !text }>追加</button>
+            <button onclick={ parent.finEdit }>終了</button>
           </form>
       </div>
 
@@ -24,6 +25,20 @@
         </li>
       </ul>
 
+      <div hide={ visible } class="edit_child">
+          <form onsubmit={ addChild }>
+            <input name="childinput" size="48px" onkeyup={ editChild }>
+            <input name="childtime" type="time" onchange={ editClock }>
+            <button disabled={ !text }>追加</button>
+            <button onclick={ parent.finEditChild }>終了</button>
+          </form>
+      </div>
+
+      <ul if={ children }>
+        <li each={ children } class="child">
+          <input type="checkbox" checked={ done }> { title }<span class="clearfix">{ clock }</span>
+        </li>
+      </ul>
 
     </li>
   </ul>
@@ -38,19 +53,20 @@
   </form>
 
   <script>
-    var newitems = JSON.parse(localStorage.getItem("text"));
+    // var newitems = JSON.parse(localStorage.getItem("text"));
 
-    if(newitems) {
-      this.items = newitems
-    }
-    else {
-      this.items = [];
-    };
+    // if(newitems) {
+    //   this.items = newitems
+    // }
+    // else {
+    //   this.items = [];
+    // };
 
-    // this.items = opts.items
+    this.items = opts.items
 
 
     this.tagcontents = opts.items.tagcontents
+    this.children = opts.items.children
 
     edit(e) {
       this.text = e.target.value
@@ -62,6 +78,14 @@
 
     editTag(e) {
       this.text = e.target.value
+    }
+
+    editChild(e) {
+      this.text = e.target.value
+    }
+
+    editClock(e) {
+      this.time = e.target.value
     }
 
     this.visible = true;
@@ -78,6 +102,18 @@
       $('.edit_tag').eq(num).css("display","none");
     }
 
+    childEdit(e) {
+      var num = this.items.indexOf(e.item)
+      console.log(num);
+      $('.edit_child').eq(num).css("display","block");
+    }
+
+    finEditChild(e) {
+      var num = this.items.indexOf(e.item)
+      console.log(num);
+      $('.edit_child').eq(num).css("display","none");
+    }
+
     add(e) {
       if (this.text) {
         this.items.push({ title: this.text, time: this.date, tagcontents: [] })
@@ -85,12 +121,16 @@
         var fieldvalue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldvalue);
 
-        this.text = this.input.value = ""
-        this.date = this.datetime.value = ""
+        this.text = this.childinput.value = ""
+        this.date = this.childtime.value = ""
       }
     }
 
     addTag(e) {
+      if (!e.item.tagcontents){
+        e.item.tagcontents = [];
+      }
+
       if (this.text) {
         e.item.tagcontents.push({ tagname: this.text })
 
@@ -98,6 +138,22 @@
         localStorage.setItem("text", fieldvalue);
 
         this.text = this.taginput.value = ""
+      }
+    }
+
+    addChild(e) {
+      if (!e.item.children){
+        e.item.children = [];
+      }
+
+      if (this.text) {
+        e.item.children.push({ title: this.text, clock: this.time })
+
+        var fieldvalue = JSON.stringify(this.items);
+        localStorage.setItem("text", fieldvalue);
+
+        this.text = this.taginput.value = ""
+        this.time = this.taginput.value = ""
       }
     }
 
@@ -111,9 +167,6 @@
     }
 
     removetag(e) {
-      // this.tagcontents, e.tagcontentがundefinedになっちゃう
-      // console.log(e.item);
-      // console.log(e.itme.tagcontents);
       var tagcontent = e.tagcontent
       console.log(tagcontent);
       var index = e.item.tagcontents.indexOf(tagcontent)
@@ -133,8 +186,4 @@
   </script>
 
 </todo>
-
-
-
-
 
