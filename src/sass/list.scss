@@ -52,40 +52,6 @@ $defaultPad: 10px;
  }
  }
 
-
-body{
-	font-size: $defaultSize;
-}
-
-h1{
-	color: $defaultColor;
-}
-
-form{
-	input{
-		font-size: $defaultSize;
-		padding: $defaultPad;
-		@include round(5%);
-	}
-	input[type=date]{
-		font-size: 14px;
-		padding: 10px;
-		color: #008080;
-	}
-
-	button{
-		font-size: $defaultSize;
-		background-color: #66CDAA;
-		color: white;
-		padding: 10px;
-		@include round(8%);
-		&[disabled]{
-			background-color: #ddd;
-            color: #aaa;
-		}
-	}
-}
-
 ul{
 	width: 800px;
 	padding: 20px;

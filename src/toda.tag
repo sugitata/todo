@@ -12,7 +12,7 @@
       <div hide={ visible } class="edit_tag">
           <form onsubmit={ addTag }>
             <input name="taginput" size="30px" onkeyup={ editTag }>
-            <button disabled={ !text }>追加</button>
+            <button disabled={ !text }>Add</button>
             <button onclick={ parent.finEdit }>終了</button>
           </form>
       </div>
@@ -29,14 +29,17 @@
           <form onsubmit={ addChild }>
             <input name="childinput" size="48px" onkeyup={ editChild }>
             <input name="childtime" type="time" onchange={ editClock }>
-            <button disabled={ !text }>追加</button>
+            <button disabled={ !text }>Add</button>
+            <button disabled={ e.item.children.filter(onlyDone).length == 0 } onclick={ removeChildrenDone }>Done</button>
             <button onclick={ parent.finEditChild }>終了</button>
           </form>
       </div>
 
       <ul if={ children }>
         <li each={ children } class="child">
-          <input type="checkbox" checked={ done }> { title }<span class="clearfix">{ clock }</span>
+         <label>
+          <input type="checkbox" checked={ done } onclick={ parent.toggleChild }> { title }<span class="clearfix">{ clock }</span>
+         </label>
         </li>
       </ul>
 
@@ -53,20 +56,18 @@
   </form>
 
   <script>
-    // var newitems = JSON.parse(localStorage.getItem("text"));
+    var newitems = JSON.parse(localStorage.getItem("text"));
 
-    // if(newitems) {
-    //   this.items = newitems
-    // }
-    // else {
-    //   this.items = [];
-    // };
+    if(newitems) {
+      this.items = newitems
+    }
+    else {
+      this.items = [];
+    };
 
-    this.items = opts.items
-
-
-    this.tagcontents = opts.items.tagcontents
-    this.children = opts.items.children
+    // this.items = opts.items
+    // this.tagcontents = opts.items.tagcontents
+    // this.children = opts.items.children
 
     edit(e) {
       this.text = e.target.value
@@ -92,31 +93,27 @@
 
     tagEdit(e) {
       var num = this.items.indexOf(e.item)
-      console.log(num);
       $('.edit_tag').eq(num).css("display","block");
     }
 
     finEdit(e) {
       var num = this.items.indexOf(e.item)
-      console.log(num);
       $('.edit_tag').eq(num).css("display","none");
     }
 
     childEdit(e) {
       var num = this.items.indexOf(e.item)
-      console.log(num);
       $('.edit_child').eq(num).css("display","block");
     }
 
     finEditChild(e) {
       var num = this.items.indexOf(e.item)
-      console.log(num);
       $('.edit_child').eq(num).css("display","none");
     }
 
     add(e) {
       if (this.text) {
-        this.items.push({ title: this.text, time: this.date, tagcontents: [] })
+        this.items.push({ title: this.text, time: this.date })
 
         var fieldvalue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldvalue);
@@ -166,10 +163,21 @@
       localStorage.setItem("text", fieldvalue);
     }
 
+    removeChildrenDone(e) {
+      // childrenの要素に関して削除できない
+      this.children = this.children.filter(function(item) {
+        return !item.done
+      })
+
+      var fieldvalue = JSON.stringify(this.items);
+      localStorage.setItem("text", fieldvalue);
+    }
+
     removetag(e) {
-      var tagcontent = e.tagcontent
+      var tagcontent = e.item
       console.log(tagcontent);
-      var index = e.item.tagcontents.indexOf(tagcontent)
+      // this.tagcontentsからindexOfができない
+      var index = this.tagcontents.indexOf(tagcontent)
       this.tagcontents.splice(index, 1)
     }
 
@@ -186,4 +194,3 @@
   </script>
 
 </todo>
-
