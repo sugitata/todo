@@ -19,9 +19,9 @@
 
 
       <ul>
-        <li each={ tagcontents }>
-            { tagname }
-            <button onclick={ parent.removetag }>X</button>
+        <li each={ tagContents }>
+            { tagName }
+            <button onclick={ parent.removeTag(tagContents) }>X</button>
         </li>
       </ul>
 
@@ -30,15 +30,15 @@
             <input name="childinput" size="48px" onkeyup={ editChild }>
             <input name="childtime" type="time" onchange={ editClock }>
             <button disabled={ !text }>Add</button>
-            <button disabled={ e.item.children.filter(onlyDone).length == 0 } onclick={ removeChildrenDone }>Done</button>
+            <button disabled={ e.item.children.filter(onlyDone).length == 0 } onclick={ removeChildrenDone(children) }>Done</button>
             <button onclick={ parent.finEditChild }>終了</button>
           </form>
       </div>
 
       <ul if={ children }>
         <li each={ children } class="child">
-         <label>
-          <input type="checkbox" checked={ done } onclick={ parent.toggleChild }> { title }<span class="clearfix">{ clock }</span>
+         <label class={ completed: done }>
+          <input type="checkbox" checked={ done } onclick={ parent.toggleChild(children) }> { title }<span class="clearfix">{ clock }</span>
          </label>
         </li>
       </ul>
@@ -56,18 +56,16 @@
   </form>
 
   <script>
-    var newitems = JSON.parse(localStorage.getItem("text"));
+    var newItem = JSON.parse(localStorage.getItem("text"));
 
-    if(newitems) {
-      this.items = newitems
+    if(newItem) {
+      this.items = newItem
     }
     else {
       this.items = [];
     };
 
     // this.items = opts.items
-    // this.tagcontents = opts.items.tagcontents
-    // this.children = opts.items.children
 
     edit(e) {
       this.text = e.target.value
@@ -115,24 +113,24 @@
       if (this.text) {
         this.items.push({ title: this.text, time: this.date })
 
-        var fieldvalue = JSON.stringify(this.items);
-        localStorage.setItem("text", fieldvalue);
+        var fieldValue = JSON.stringify(this.items);
+        localStorage.setItem("text", fieldValue);
 
-        this.text = this.childinput.value = ""
-        this.date = this.childtime.value = ""
+        this.text = this.input.value = ""
+        this.date = this.datetime.value = ""
       }
     }
 
     addTag(e) {
-      if (!e.item.tagcontents){
-        e.item.tagcontents = [];
+      if (!e.item.tagContents){
+        e.item.tagContents = [];
       }
 
       if (this.text) {
-        e.item.tagcontents.push({ tagname: this.text })
+        e.item.tagContents.push({ tagName: this.text })
 
-        var fieldvalue = JSON.stringify(this.items);
-        localStorage.setItem("text", fieldvalue);
+        var fieldValue = JSON.stringify(this.items);
+        localStorage.setItem("text", fieldValue);
 
         this.text = this.taginput.value = ""
       }
@@ -146,8 +144,8 @@
       if (this.text) {
         e.item.children.push({ title: this.text, clock: this.time })
 
-        var fieldvalue = JSON.stringify(this.items);
-        localStorage.setItem("text", fieldvalue);
+        var fieldValue = JSON.stringify(this.items);
+        localStorage.setItem("text", fieldValue);
 
         this.text = this.taginput.value = ""
         this.time = this.taginput.value = ""
@@ -159,26 +157,32 @@
         return !item.done
       })
 
-      var fieldvalue = JSON.stringify(this.items);
-      localStorage.setItem("text", fieldvalue);
+      var fieldValue = JSON.stringify(this.items);
+      localStorage.setItem("text", fieldValue);
     }
 
-    removeChildrenDone(e) {
-      // childrenの要素に関して削除できない
-      this.children = this.children.filter(function(item) {
-        return !item.done
-      })
+    // done: trueにしてある配列がreturn !child.doneで消えない
+    removeChildrenDone(children) {
+      return function(e){
+          this.children = this.children.filter(function(child) {
+            return !child.done
+          })
 
-      var fieldvalue = JSON.stringify(this.items);
-      localStorage.setItem("text", fieldvalue);
+          var fieldValue = JSON.stringify(this.items);
+          localStorage.setItem("text", fieldValue);
+        }
     }
 
-    removetag(e) {
-      var tagcontent = e.item
-      console.log(tagcontent);
-      // this.tagcontentsからindexOfができない
-      var index = this.tagcontents.indexOf(tagcontent)
-      this.tagcontents.splice(index, 1)
+
+    removeTag(tagContents) {
+      return function(e){
+          var tagcontent = e.item
+          var index = tagContents.indexOf(tagcontent)
+          this.tagContents.splice(index, 1)
+
+          var fieldValue = JSON.stringify(this.items);
+          localStorage.setItem("text", fieldValue);
+     }
     }
 
 
@@ -191,6 +195,15 @@
       item.done = !item.done
       return true
     }
+
+    toggleChild(children) {
+      return function(e){
+        var child = e.item
+        child.done = !child.done
+        return true
+      }
+    }
   </script>
 
 </todo>
+
