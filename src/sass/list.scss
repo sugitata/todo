@@ -58,12 +58,11 @@ ul{
 	@include gradient(#48D1CC, #E0FFFF, vertical);
 	@include round(8px);
 
-	.task:hover{
-		box-shadow:0px 0px 17px 6px #679e9b;
+	.task{
+		box-shadow:0px 0px 16px 2px #679e9b;
 	}
 
-	li{ width: 800px - 40px;
-		margin: 10px 0;
+	li{ margin: 12px 0;
 		padding: $defaultPad;
 		display: block;
 		list-style: none;
@@ -95,15 +94,19 @@ ul{
 		   	font-size: 14px;
 		   }
 
+		   .childList{padding-top: 0;}
+
 		   ul{
 		   	@include gradient(white, white, vertical);
-		   	width: 600px;
+		   	padding: 10px;
+		   	width: 700px;
+
 
 		   	li{
-		   		display: inline;
+		   		display: inline-block;
 		   		height: 20px;
 		   		font-size: $defaultSize - 4px;
-		   		margin: 3px;
+		   		margin: 10px 3px;
 		   		background-color: #B0C572;
 		   		color: white;
 		   	}
@@ -116,6 +119,7 @@ ul{
 		   	.child{
 		   		width: 400px;
 		   		display: block;
+		   		padding: 2px;
 		   		background-color: white;
 		        color: #008080;
 		   	}

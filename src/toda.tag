@@ -3,12 +3,12 @@
   <h1>{ opts.title }</h1>
 
   <ul>
-    <li each={ items } class="task">
+    <li each={ items } class="task" onclick={ slideDown }>
       <label class={ completed: done }>
         <input type="checkbox" class="cb" checked={ done } onclick={ parent.toggle }> { title }<span>{ time }<span>
       </label>
       <button onclick={ parent.tagEdit }>タグ編集</button>
-      <button onclick={ parent.childEdit }>タスク編集</button>
+      <button onclick={ parent.childEdit } class="toggleTask">タスク編集</button>
       <div hide={ visible } class="edit_tag">
           <form onsubmit={ addTag }>
             <input name="taginput" size="30px" onkeyup={ editTag }>
@@ -25,7 +25,7 @@
         </li>
       </ul>
 
-      <div hide={ visible } class="edit_child">
+      <div class="edit_child" hide={ visible }>
           <form onsubmit={ addChild }>
             <input name="childinput" size="48px" onkeyup={ editChild }>
             <input name="childtime" type="time" onchange={ editClock }>
@@ -35,7 +35,7 @@
           </form>
       </div>
 
-      <ul if={ children }>
+      <ul if={ children } class="childList">
         <li each={ children } class="child">
          <label class={ completed: done }>
           <input type="checkbox" checked={ done } onclick={ parent.toggleChild(children) }> { title }<span class="clearfix">{ clock }</span>
@@ -102,6 +102,7 @@
     childEdit(e) {
       var num = this.items.indexOf(e.item)
       $('.edit_child').eq(num).css("display","block");
+      $('.childList').eq(num).slideDown();
     }
 
     finEditChild(e) {
@@ -111,7 +112,9 @@
 
     add(e) {
       if (this.text) {
-        this.items.push({ title: this.text, time: this.date })
+        this.items.push({ title: this.text, time: this.date, tagContents: [], children: [] })
+        console.log(this)
+        console.log(e.item)
 
         var fieldValue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldValue);
@@ -122,9 +125,6 @@
     }
 
     addTag(e) {
-      if (!e.item.tagContents){
-        e.item.tagContents = [];
-      }
 
       if (this.text) {
         e.item.tagContents.push({ tagName: this.text })
@@ -132,14 +132,12 @@
         var fieldValue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldValue);
 
-        this.text = this.taginput.value = ""
+        var num = this.items.indexOf(e.item)
+        this.text = this.taginput[num].value = ""
       }
     }
 
     addChild(e) {
-      if (!e.item.children){
-        e.item.children = [];
-      }
 
       if (this.text) {
         e.item.children.push({ title: this.text, clock: this.time })
@@ -147,8 +145,9 @@
         var fieldValue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldValue);
 
-        this.text = this.taginput.value = ""
-        this.time = this.taginput.value = ""
+        var num = this.items.indexOf(e.item)
+        this.text = this.childinput[num].value = ""
+        this.time = this.childtime[num].value = ""
       }
     }
 
@@ -161,10 +160,9 @@
       localStorage.setItem("text", fieldValue);
     }
 
-    // done: trueにしてある配列がreturn !child.doneで消えない
     removeChildrenDone(children) {
       return function(e){
-          this.children = this.children.filter(function(child) {
+          e.item.children = e.item.children.filter(function(child) {
             return !child.done
           })
 
