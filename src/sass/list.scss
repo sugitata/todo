@@ -76,10 +76,23 @@ ul{
 			vertical-align: middle;
 		   }
 
+		   #editButton1{
+		   	margin-left: 16px;
+		   }
+		   #editButton2{
+		   	margin-left: 6px;
+		   }
+
 		   div{
+		   	    margin-left: 12px;
 		   	input{
 		   		font-size: $defaultSize - 6px;
 		   	}
+
+		   	#childtime{
+		   		height:15px;
+		   	}
+
 
 		   	button{
 		   		font-size: $defaultSize - 8px;
@@ -94,7 +107,9 @@ ul{
 		   	font-size: 14px;
 		   }
 
-		   .childList{padding-top: 0;}
+		   .childList{
+		   	padding-top: 0;
+		   }
 
 		   ul{
 		   	@include gradient(white, white, vertical);

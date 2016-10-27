@@ -7,8 +7,8 @@
       <label class={ completed: done }>
         <input type="checkbox" class="cb" checked={ done } onclick={ parent.toggle }> { title }<span>{ time }<span>
       </label>
-      <button onclick={ parent.tagEdit }>タグ編集</button>
-      <button onclick={ parent.childEdit } class="toggleTask">タスク編集</button>
+      <button id="editButton1" onclick={ parent.tagEdit }>タグ編集</button>
+      <button id="editButton2" onclick={ parent.childEdit } class="toggleTask">タスク編集</button>
       <div hide={ visible } class="edit_tag">
           <form onsubmit={ addTag }>
             <input name="taginput" size="30px" onkeyup={ editTag }>
@@ -16,7 +16,6 @@
             <button onclick={ parent.finEdit }>終了</button>
           </form>
       </div>
-
 
       <ul>
         <li each={ tagContents }>
@@ -28,7 +27,7 @@
       <div class="edit_child" hide={ visible }>
           <form onsubmit={ addChild }>
             <input name="childinput" size="48px" onkeyup={ editChild }>
-            <input name="childtime" type="time" onchange={ editClock }>
+            <input name="childtime" id="childtime" type="time" onchange={ editClock }>
             <button disabled={ !text }>Add</button>
             <button disabled={ e.item.children.filter(onlyDone).length == 0 } onclick={ removeChildrenDone(children) }>Done</button>
             <button onclick={ parent.finEditChild }>終了</button>
@@ -91,30 +90,27 @@
 
     tagEdit(e) {
       var num = this.items.indexOf(e.item)
-      $('.edit_tag').eq(num).css("display","block");
+      $('.edit_tag').eq(num).slideDown();
     }
 
     finEdit(e) {
       var num = this.items.indexOf(e.item)
-      $('.edit_tag').eq(num).css("display","none");
+      $('.edit_tag').eq(num).slideUp();
     }
 
     childEdit(e) {
       var num = this.items.indexOf(e.item)
-      $('.edit_child').eq(num).css("display","block");
-      $('.childList').eq(num).slideDown();
+      $('.edit_child').eq(num).slideDown();
     }
 
     finEditChild(e) {
       var num = this.items.indexOf(e.item)
-      $('.edit_child').eq(num).css("display","none");
+      $('.edit_child').eq(num).slideUp();
     }
 
     add(e) {
       if (this.text) {
         this.items.push({ title: this.text, time: this.date, tagContents: [], children: [] })
-        console.log(this)
-        console.log(e.item)
 
         var fieldValue = JSON.stringify(this.items);
         localStorage.setItem("text", fieldValue);
@@ -155,6 +151,12 @@
       this.items = this.items.filter(function(item) {
         return !item.done
       })
+
+      if(!this.item){
+        this.childinput = []
+        this.childtime = []
+        this.taginput = []
+      }
 
       var fieldValue = JSON.stringify(this.items);
       localStorage.setItem("text", fieldValue);
@@ -201,6 +203,7 @@
         return true
       }
     }
+
   </script>
 
 </todo>
