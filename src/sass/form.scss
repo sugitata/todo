@@ -1,5 +1,4 @@
 $defaultSize: 18px;
-$defaultPad: 10px;
 
 @mixin round($radius) {
 	border-radius: $radius;
@@ -8,7 +7,7 @@ $defaultPad: 10px;
 form{
 	input{
 		font-size: $defaultSize;
-		padding: $defaultPad;
+		padding: 10px;
 		@include round(5%);
 	}
 	input[type=date]{
@@ -25,7 +24,7 @@ form{
 		@include round(8%);
 		&[disabled]{
 			background-color: #ddd;
-            color: #aaa;
+			color: #aaa;
 		}
 	}
 }

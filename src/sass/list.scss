@@ -1,10 +1,9 @@
 $defaultColor: rgba(0,0,100,0.5);
 $hoverColor: rgba(200,0,0,0.6);
 $defaultSize: 18px;
-$defaultPad: 10px;
 
 .clearfix:after {
-    content:" ";
+    content:"";
     display:block;
     clear:both;
 }
@@ -19,7 +18,6 @@ $defaultPad: 10px;
  background: $start-color;
  @if $orientation == vertical
  {
- // vertical
  background: -moz-linear-gradient(top,  $start-color 0%, $end-color 100%);
  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$start-color), color-stop(100%,$end-color));
  background: -webkit-linear-gradient(top,  $start-color 0%,$end-color 100%);
@@ -30,7 +28,6 @@ $defaultPad: 10px;
  }
  @else if $orientation == horizontal
  {
- // horizontal
  background: -moz-linear-gradient(left,  $start-color 0%, $end-color 100%);
  background: -webkit-gradient(linear, left top, right top, color-stop(0%,$start-color), color-stop(100%,$end-color));
  background: -webkit-linear-gradient(left,  $start-color 0%,$end-color 100%);
@@ -41,7 +38,6 @@ $defaultPad: 10px;
  }
  @else
  {
- // radial
  background: -moz-radial-gradient(center, ellipse cover,  $start-color 0%, $end-color 100%);
  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,$start-color), color-stop(100%,$end-color));
  background: -webkit-radial-gradient(center, ellipse cover,  $start-color 0%,$end-color 100%);
@@ -63,12 +59,17 @@ ul{
 	}
 
 	li{ margin: 12px 0;
-		padding: $defaultPad;
+		padding: 10px;
 		display: block;
 		list-style: none;
 		background-color: white;
 		color: #008080;
 		@include round(4px);
+
+			.completed{
+			text-decoration: line-through;
+			color: #ccc;
+		   }
 
 			input[type=checkbox]{
 			width: 30px;
@@ -83,13 +84,23 @@ ul{
 		   	margin-left: 6px;
 		   }
 
+		   span{
+		   	float: right;
+		   	font-size: 14px;
+		   }
+
+		   #childList{
+		   	padding-top: 0;
+		   }
+
 		   div{
 		   	    margin-left: 12px;
+
 		   	input{
 		   		font-size: $defaultSize - 6px;
 		   	}
 
-		   	#childtime{
+		   	#childTime{
 		   		height:15px;
 		   	}
 
@@ -102,20 +113,11 @@ ul{
 
 		   }
 
-		   span{
-		   	float: right;
-		   	font-size: 14px;
-		   }
-
-		   .childList{
-		   	padding-top: 0;
-		   }
 
 		   ul{
 		   	@include gradient(white, white, vertical);
 		   	padding: 10px;
 		   	width: 700px;
-
 
 		   	li{
 		   		display: inline-block;
@@ -141,11 +143,6 @@ ul{
 
 		   }
 
-		}
+	  }
 
-		.completed{
-			text-decoration: line-through;
-			color: #ccc;
-		}
 }
-
