@@ -56,7 +56,9 @@
 
   <script>
 
-    this.visible = true
+    var self = this
+
+    self.visible = true
 
     function saveItem(contents) {
       var fieldValue = JSON.stringify(contents)
@@ -66,95 +68,95 @@
     var newItem = JSON.parse(localStorage.getItem("text"))
 
     if(newItem) {
-      this.items = newItem
+      self.items = newItem
     } else {
-      this.items = []
+      self.items = []
     }
 
     edit(e) {
-      this.text = e.target.value
+      self.text = e.target.value
     }
 
     editDate(e) {
-      this.date = e.target.value
+      self.date = e.target.value
     }
 
     editTime(e) {
-      this.time = e.target.value
+      self.time = e.target.value
     }
 
 
     tagEdit(e) {
-      var num = this.items.indexOf(e.item)
+      var num = self.items.indexOf(e.item)
       $('.edit_tag').eq(num).slideDown()
     }
 
     finTagEdit(e) {
-      var num = this.items.indexOf(e.item)
+      var num = self.items.indexOf(e.item)
       $('.edit_tag').eq(num).slideUp()
     }
 
     childEdit(e) {
-      var num = this.items.indexOf(e.item)
+      var num = self.items.indexOf(e.item)
       $('.edit_child').eq(num).slideDown()
     }
 
     finChildEdit(e) {
-      var num = this.items.indexOf(e.item)
+      var num = self.items.indexOf(e.item)
       $('.edit_child').eq(num).slideUp()
     }
 
     add(e) {
-      if (this.text) {
-        this.items.push({ title: this.text, date: this.date, tagContents: [], children: [] })
+      if (self.text) {
+        self.items.push({ title: self.text, date: self.date, tagContents: [], children: [] })
 
-        saveItem(this.items)
+        saveItem(self.items)
 
-        this.input.value = ""
-        this.text = this.input.value
-        this.dateTime.value = ""
-        this.date = this.dateTime.value
+        self.input.value = ""
+        self.text = self.input.value
+        self.dateTime.value = ""
+        self.date = self.dateTime.value
       }
     }
 
     addTag(e) {
-      if (this.text) {
-        e.item.tagContents.push({ tagName: this.text })
+      if (self.text) {
+        e.item.tagContents.push({ tagName: self.text })
 
-        saveItem(this.items)
+        saveItem(self.items)
 
-        var num = this.items.indexOf(e.item)
-        this.tagInput[num].value = ""
-        this.text = this.tagInput[num].value
+        var num = self.items.indexOf(e.item)
+        self.tagInput[num].value = ""
+        self.text = self.tagInput[num].value
       }
     }
 
     addChild(e) {
-      if (this.text) {
-        e.item.children.push({ title: this.text, time: this.time })
+      if (self.text) {
+        e.item.children.push({ title: self.text, time: self.time })
 
-        saveItem(this.items)
+        saveItem(self.items)
 
-        var num = this.items.indexOf(e.item)
-        this.childInput[num].value = ""
-        this.text = this.childInput[num].value
-        this.childTime[num].value = ""
-        this.time = this.childTime[num].value
+        var num = self.items.indexOf(e.item)
+        self.childInput[num].value = ""
+        self.text = self.childInput[num].value
+        self.childTime[num].value = ""
+        self.time = self.childTime[num].value
       }
     }
 
     removeAllDone(e) {
-      this.items = this.items.filter(function(item) {
+      self.items = self.items.filter(function(item) {
         return !item.done
       })
 
-      if(!this.item){
-        this.childInput = []
-        this.childTime = []
-        this.tagInput = []
+      if(!self.item){
+        self.childInput = []
+        self.childTime = []
+        self.tagInput = []
       }
 
-      var fieldValue = JSON.stringify(this.items)
+      var fieldValue = JSON.stringify(self.items)
       localStorage.setItem("text", fieldValue)
     }
 
@@ -163,19 +165,19 @@
         return !child.done
       })
 
-      var fieldValue = JSON.stringify(this.items)
+      var fieldValue = JSON.stringify(self.items)
       localStorage.setItem("text", fieldValue)
     }
 
 
     removeTag(tagContents) {
       return function(e){
-          var tagcontent = e.item
-          var index = tagContents.indexOf(tagcontent)
-          this.tagContents.splice(index, 1)
+        var tagcontent = e.item
+        var index = tagContents.indexOf(tagcontent)
+        this.tagContents.splice(index, 1)
 
-          var fieldValue = JSON.stringify(this.items)
-          localStorage.setItem("text", fieldValue)
+        var fieldValue = JSON.stringify(self.items)
+        localStorage.setItem("text", fieldValue)
       }
     }
 
