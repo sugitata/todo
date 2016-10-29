@@ -31,7 +31,7 @@ gulp.task("watch", function(){
 	gulp.src("./dist")
 	  .pipe(
 	  	webserver({
-	  		host: "192.168.33.10",
+			host: "localhost",
 	  		livereload: true
 	  	})
 	  	);
