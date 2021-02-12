@@ -1,0 +1,30 @@
+$defaultSize: 18px;
+
+@mixin round($radius) {
+	border-radius: $radius;
+}
+
+form{
+	input{
+		font-size: $defaultSize;
+		padding: 10px;
+		@include round(5%);
+	}
+	input[type=date]{
+		font-size: 14px;
+		padding: 10px;
+		color: #008080;
+	}
+
+	button{
+		font-size: $defaultSize;
+		background-color: #66CDAA;
+		color: white;
+		padding: 10px;
+		@include round(8%);
+		&[disabled]{
+			background-color: #ddd;
+			color: #aaa;
+		}
+	}
+}

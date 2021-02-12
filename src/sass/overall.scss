@@ -1,0 +1,9 @@
+$defaultColor: rgba(0,0,100,0.5);
+$defaultSize: 18px;
+body{
+	font-size: $defaultSize;
+}
+
+h1{
+	color: $defaultColor;
+}
